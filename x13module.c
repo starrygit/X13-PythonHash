@@ -17,9 +17,9 @@ static PyObject *x13_getpowhash(PyObject *self, PyObject *args)
     output = PyMem_Malloc(32);
 
 #if PY_MAJOR_VERSION >= 3
-    x13_hash((char *)PyBytes_AsString((PyObject*) input), output);
+    x13sm3_hash((char *)PyBytes_AsString((PyObject*) input), output);
 #else
-    x13_hash((char *)PyString_AsString((PyObject*) input), output);
+    x13sm3_hash((char *)PyString_AsString((PyObject*) input), output);
 #endif
     Py_DECREF(input);
 #if PY_MAJOR_VERSION >= 3
@@ -45,13 +45,13 @@ static struct PyModuleDef X13Module = {
     X13Methods
 };
 
-PyMODINIT_FUNC PyInit_x13_hash(void) {
+PyMODINIT_FUNC PyInit_x13sm3_hash(void) {
     return PyModule_Create(&X13Module);
 }
 
 #else
 
-PyMODINIT_FUNC initx13_hash(void) {
+PyMODINIT_FUNC initx13sm3_hash(void) {
     (void) Py_InitModule("x13sm3_hash", X13Methods);
 }
 #endif
