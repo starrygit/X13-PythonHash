@@ -17,6 +17,7 @@
 #include "sha3/sph_echo.h"
 #include "sha3/sph_hamsi.h"
 #include "sha3/sph_fugue.h"
+#include "sha3/sph_sm3.h"
 
 
 void x13_hash(const char* input, char* output)
@@ -34,6 +35,7 @@ void x13_hash(const char* input, char* output)
     sph_echo512_context		ctx_echo1;
     sph_hamsi512_context	ctx_hamsi1;
     sph_fugue512_context	ctx_fugue1;
+    sm3_ctx_t               ctx_sm3;
 
     //these uint512 in the c++ source of the client are backed by an array of uint32
     uint32_t hashA[16], hashB[16];	
@@ -80,19 +82,23 @@ void x13_hash(const char* input, char* output)
 	
     sph_echo512_init (&ctx_echo1); 
     sph_echo512 (&ctx_echo1, hashB, 64);   
-    sph_echo512_close(&ctx_echo1, hashA); 
+    sph_echo512_close(&ctx_echo1, hashA);
+
+    sm3_init(&ctx_sm3);
+    sph_sm3(&ctx_sm3, hashA, 64);
+    sph_sm3_close(&ctx_sm3, hashB);
 
     sph_hamsi512_init (&ctx_hamsi1);
-    sph_hamsi512 (&ctx_hamsi1, hashA, 64);
-    sph_hamsi512_close(&ctx_hamsi1, hashB);
+    sph_hamsi512 (&ctx_hamsi1, hashB, 64);
+    sph_hamsi512_close(&ctx_hamsi1, hashA);
 
     sph_fugue512_init (&ctx_fugue1);
-    sph_fugue512 (&ctx_fugue1, hashB, 64);
-    sph_fugue512_close(&ctx_fugue1, hashA);
+    sph_fugue512 (&ctx_fugue1, hashA, 64);
+    sph_fugue512_close(&ctx_fugue1, hashB);
 
 
 
-    memcpy(output, hashA, 32);
+    memcpy(output, hashB, 32);
 	
 }
 

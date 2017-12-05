@@ -39,7 +39,7 @@ static PyMethodDef X13Methods[] = {
 #if PY_MAJOR_VERSION >= 3
 static struct PyModuleDef X13Module = {
     PyModuleDef_HEAD_INIT,
-    "x13_hash",
+    "x13sm3_hash",
     "...",
     -1,
     X13Methods
@@ -52,6 +52,6 @@ PyMODINIT_FUNC PyInit_x13_hash(void) {
 #else
 
 PyMODINIT_FUNC initx13_hash(void) {
-    (void) Py_InitModule("x13_hash", X13Methods);
+    (void) Py_InitModule("x13sm3_hash", X13Methods);
 }
 #endif
