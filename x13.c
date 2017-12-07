@@ -20,7 +20,7 @@
 #include "sha3/sph_sm3.h"
 
 
-void x13sm3_hash(const char* input, char* output)
+void x13bcd_hash(const char* input, char* output)
 {
     sph_blake512_context     ctx_blake;
     sph_bmw512_context       ctx_bmw;
@@ -64,9 +64,9 @@ void x13sm3_hash(const char* input, char* output)
     sph_keccak512 (&ctx_keccak, hashA, 64);
     sph_keccak512_close(&ctx_keccak, hashB);
 	
-    sph_luffa512_init (&ctx_luffa1);
-    sph_luffa512 (&ctx_luffa1, hashB, 64);
-    sph_luffa512_close (&ctx_luffa1, hashA);	
+    sm3_init(&ctx_sm3);
+    sph_sm3(&ctx_sm3, hashB, 64);
+    sph_sm3_close(&ctx_sm3, hashA);
 	
     sph_cubehash512_init (&ctx_cubehash1); 
     sph_cubehash512 (&ctx_cubehash1, hashA, 64);   
@@ -84,21 +84,17 @@ void x13sm3_hash(const char* input, char* output)
     sph_echo512 (&ctx_echo1, hashB, 64);   
     sph_echo512_close(&ctx_echo1, hashA);
 
-    sm3_init(&ctx_sm3);
-    sph_sm3(&ctx_sm3, hashA, 64);
-    sph_sm3_close(&ctx_sm3, hashB);
-
     sph_hamsi512_init (&ctx_hamsi1);
-    sph_hamsi512 (&ctx_hamsi1, hashB, 64);
-    sph_hamsi512_close(&ctx_hamsi1, hashA);
+    sph_hamsi512 (&ctx_hamsi1, hashA, 64);
+    sph_hamsi512_close(&ctx_hamsi1, hashB);
 
     sph_fugue512_init (&ctx_fugue1);
-    sph_fugue512 (&ctx_fugue1, hashA, 64);
-    sph_fugue512_close(&ctx_fugue1, hashB);
+    sph_fugue512 (&ctx_fugue1, hashB, 64);
+    sph_fugue512_close(&ctx_fugue1, hashA);
 
 
 
-    memcpy(output, hashB, 32);
+    memcpy(output, hashA, 32);
 	
 }
 
