@@ -1,6 +1,6 @@
 from distutils.core import setup, Extension
 
-x13bcd_hash_module = Extension('x13bcd_hash',
+x12_hash_module = Extension('x12_hash',
                                sources = ['x13module.c',
                                           'x13.c',
 										  'sha3/blake.c',
@@ -21,7 +21,7 @@ x13bcd_hash_module = Extension('x13bcd_hash',
 
                                include_dirs=['.', './sha3'])
 
-setup (name = 'x13bcd_hash',
+setup (name = 'x12_hash',
        version = '1.0',
        description = 'Bindings for proof of work used by x13sm3',
-       ext_modules = [x13bcd_hash_module])
+       ext_modules = [x12_hash_module])

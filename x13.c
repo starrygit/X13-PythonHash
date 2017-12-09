@@ -20,7 +20,7 @@
 #include "sha3/sph_sm3.h"
 
 
-void x13bcd_hash(const char* input, char* output)
+void x12_hash(const char* input, char* output)
 {
     sph_blake512_context     ctx_blake;
     sph_bmw512_context       ctx_bmw;
@@ -35,7 +35,7 @@ void x13bcd_hash(const char* input, char* output)
     sph_echo512_context		ctx_echo1;
     sph_hamsi512_context	ctx_hamsi1;
     sph_fugue512_context	ctx_fugue1;
-    sm3_ctx_t               ctx_sm3;
+//    sm3_ctx_t               ctx_sm3;
 
     //these uint512 in the c++ source of the client are backed by an array of uint32
     uint32_t hashA[16], hashB[16];	
@@ -64,38 +64,38 @@ void x13bcd_hash(const char* input, char* output)
     sph_keccak512 (&ctx_keccak, hashA, 64);
     sph_keccak512_close(&ctx_keccak, hashB);
 
-	memset(hashA, 0, 64);
-    sm3_init(&ctx_sm3);
-    sph_sm3(&ctx_sm3, hashB, 64);
-    sph_sm3_close(&ctx_sm3, hashA);
+//	memset(hashA, 0, 64);
+//    sm3_init(&ctx_sm3);
+//    sph_sm3(&ctx_sm3, hashB, 64);
+//    sph_sm3_close(&ctx_sm3, hashA);
 	
     sph_cubehash512_init (&ctx_cubehash1); 
-    sph_cubehash512 (&ctx_cubehash1, hashA, 64);   
-    sph_cubehash512_close(&ctx_cubehash1, hashB);  
+    sph_cubehash512 (&ctx_cubehash1, hashB, 64);
+    sph_cubehash512_close(&ctx_cubehash1, hashA);
 	
     sph_shavite512_init (&ctx_shavite1);
-    sph_shavite512 (&ctx_shavite1, hashB, 64);   
-    sph_shavite512_close(&ctx_shavite1, hashA);  
+    sph_shavite512 (&ctx_shavite1, hashA, 64);
+    sph_shavite512_close(&ctx_shavite1, hashB);
 	
     sph_simd512_init (&ctx_simd1); 
-    sph_simd512 (&ctx_simd1, hashA, 64);   
-    sph_simd512_close(&ctx_simd1, hashB); 
+    sph_simd512 (&ctx_simd1, hashB, 64);
+    sph_simd512_close(&ctx_simd1, hashA);
 	
     sph_echo512_init (&ctx_echo1); 
-    sph_echo512 (&ctx_echo1, hashB, 64);   
-    sph_echo512_close(&ctx_echo1, hashA);
+    sph_echo512 (&ctx_echo1, hashA, 64);
+    sph_echo512_close(&ctx_echo1, hashB);
 
     sph_hamsi512_init (&ctx_hamsi1);
-    sph_hamsi512 (&ctx_hamsi1, hashA, 64);
-    sph_hamsi512_close(&ctx_hamsi1, hashB);
+    sph_hamsi512 (&ctx_hamsi1, hashB, 64);
+    sph_hamsi512_close(&ctx_hamsi1, hashA);
 
     sph_fugue512_init (&ctx_fugue1);
-    sph_fugue512 (&ctx_fugue1, hashB, 64);
-    sph_fugue512_close(&ctx_fugue1, hashA);
+    sph_fugue512 (&ctx_fugue1, hashA, 64);
+    sph_fugue512_close(&ctx_fugue1, hashB);
 
 
 
-    memcpy(output, hashA, 32);
+    memcpy(output, hashB, 32);
 	
 }
 
