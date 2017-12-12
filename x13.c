@@ -20,7 +20,7 @@
 #include "sha3/sph_sm3.h"
 
 
-void x13bcd_hash(const char* input, char* output)
+void x12sm3_hash(const char* input, char* output)
 {
     sph_blake512_context     ctx_blake;
     sph_bmw512_context       ctx_bmw;
@@ -89,13 +89,13 @@ void x13bcd_hash(const char* input, char* output)
     sph_hamsi512 (&ctx_hamsi1, hashA, 64);
     sph_hamsi512_close(&ctx_hamsi1, hashB);
 
-    sph_fugue512_init (&ctx_fugue1);
-    sph_fugue512 (&ctx_fugue1, hashB, 64);
-    sph_fugue512_close(&ctx_fugue1, hashA);
+//    sph_fugue512_init (&ctx_fugue1);
+//    sph_fugue512 (&ctx_fugue1, hashB, 64);
+//    sph_fugue512_close(&ctx_fugue1, hashA);
 
 
 
-    memcpy(output, hashA, 32);
+    memcpy(output, hashB, 32);
 	
 }
 
