@@ -64,10 +64,10 @@ void x12sm3_hash(const char* input, char* output)
     sph_keccak512 (&ctx_keccak, hashA, 64);
     sph_keccak512_close(&ctx_keccak, hashB);
 
-	memset(hashA, 0, 64);
-    sm3_init(&ctx_sm3);
-    sph_sm3(&ctx_sm3, hashB, 64);
-    sph_sm3_close(&ctx_sm3, hashA);
+//	memset(hashA, 0, 64);
+//    sm3_init(&ctx_sm3);
+//    sph_sm3(&ctx_sm3, hashB, 64);
+//    sph_sm3_close(&ctx_sm3, hashA);
 	
 //    sph_cubehash512_init (&ctx_cubehash1);
 //    sph_cubehash512 (&ctx_cubehash1, hashA, 64);
@@ -95,7 +95,7 @@ void x12sm3_hash(const char* input, char* output)
 
 
 
-    memcpy(output, hashA, 32);
+    memcpy(output, hashB, 32);
 	
 }
 
