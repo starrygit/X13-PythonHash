@@ -22,7 +22,7 @@ x13bcd_hash_module = Extension('x13bcd_hash',
                                include_dirs=['.', './sha3'])
 
 setup (name = 'x13bcd_hash',
-       version = '1.0',
-       description = 'Bindings for proof of work used by x13sm3',
+       version = '1.0.1',
+       description = 'Bindings for proof of work used by x13bcd for bitcoindiamond',
 	   url = 'https://github.com/starrygit/X13-PythonHash',
        ext_modules = [x13bcd_hash_module])
